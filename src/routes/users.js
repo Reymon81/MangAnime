@@ -54,19 +54,17 @@ router.post('/users/signup', async (req, res) => {
         const nickUser = await User.findOne({nick: nick});
 
         if(nickUser){ 
-
-            req.flash('error_msg', 'Este nick ya esta registrado');  
-            setTimeout(() => {
-                res.redirect('/users/signup');
-            }, 5000);                       
-            console.log('nick repetido');            
-           
+            //si el nick existe en la bd mostramos que esta registrado y redirigimos a signup
+            req.flash('error', 'Este nick ya esta registrado');
+            res.redirect('/users/signup');
+                       
         }else{
             const newUser = new User({nick, email, password});
             //encriptamos la password
             newUser.password = await newUser.encryptPassword(password);
             //guardamos el usuario con la password encriptada
             await newUser.save();
+            //mostramos aviso que se ha registrado correctamente y redirigimos a signin
             req.flash('success_msg', 'Te has registrado correctamente');
             res.redirect('/users/signin');
         }

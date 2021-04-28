@@ -27,6 +27,7 @@ passport.serializeUser((user, done) => {
 //tomamos los datos del usuario a través del id
 passport.deserializeUser((id, done) => {
     User.findById(id, (err, user) => {
-        done(error, user);
+        done(err, user);
+        
     });    
 });

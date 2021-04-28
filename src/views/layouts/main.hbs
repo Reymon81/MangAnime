@@ -28,16 +28,15 @@
         crossorigin="anonymous"></script>
     <!-- FIN BOOTSTRAP 4 -->
 
-
-    <p>Navigation</p>
-    <main class="container">
+    {{> navbar}}
+    
+    
+    <main class="container m-5">
         {{> messages }}
         {{> errors }}
         {{{ body }}}
     </main>
     
-
-    <p>Footer</p>
 
 </body>
 </html>

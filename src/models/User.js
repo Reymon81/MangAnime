@@ -8,7 +8,7 @@ const UserSchema = new Schema({
     nick: { type: String, required: true},
     email: { type: String, required: true},
     password: { type: String, required: true}
-})
+});
 
 //metodo de encriptacion asincrono que devuelve la password cifrada
 UserSchema.methods.encryptPassword = async (password) => {    
