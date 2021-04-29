@@ -61,4 +61,4 @@ app.use(express.static(path.join(__dirname, 'public')));
 //escuchando el servidor
 server.listen(app.get('port'), () =>{
     console.log('server on port 3000');
-}); 
+});
