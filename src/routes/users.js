@@ -6,9 +6,9 @@ const User = require('../models/User');
 const passport = require('passport');
 
 //direccion para pagina de desconectarse
-router.get('/users/logoout', (req, res) => {
-    req.logoout();
-    res.render('/');
+router.get('/users/logout', (req, res) => {
+    req.logout();
+    res.redirect('/');
 });
 
 //direccion para pagina de conectarse
