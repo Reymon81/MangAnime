@@ -5,6 +5,12 @@ const User = require('../models/User');
 
 const passport = require('passport');
 
+//direccion para pagina de desconectarse
+router.get('/users/logoout', (req, res) => {
+    req.logoout();
+    res.render('/');
+});
+
 //direccion para pagina de conectarse
 router.get('/users/signin', (req, res) => {
     res.render('users/signin');
