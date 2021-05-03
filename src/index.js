@@ -44,10 +44,13 @@ app.use(flash());
 
 //variables globales
 app.use((req, res, next) => {
+    // si existe user.nick se guarda en user, si no devuelve null
+    const user = req.user ? {nick: req.user.nick} : null; 
     res.locals.success_msg = req.flash('success_msg');
     res.locals.error_msg = req.flash('error_msg');
     res.locals.error = req.flash('error');
-    res.locals.user = req.user || null;
+    res.locals.user = user || null;
+    
     next();
 })
 

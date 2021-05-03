@@ -7,11 +7,13 @@ passport.use(new localStrategy({
     usernameField: 'nick'
 }, async (nick, password, done) => {
     const user = await User.findOne({ nick: nick });
+    
     if(!user) {
         return done(null, false, {message: 'El usuario no existe'});
     }else{
         const match = await user.matchPassword(password);
         if(match) {
+            
             return done(null, user);
         }else{
             return done(null, false, {message: 'Password incorrecta'});
