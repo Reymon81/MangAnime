@@ -6,6 +6,6 @@ helpers.isAuthenticated = (req, res, next) => {
     }
     req.flash('error', 'debe loguearse');
     res.redirect('/users/signin');
-}
+};
 
 module.exports = helpers;
