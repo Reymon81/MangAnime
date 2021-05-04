@@ -1,7 +1,7 @@
 Este proyecto utiliza mongodb, por lo tanto hay que instalar la base de datos mongodb
 y antes de ejecutar el servidor hay que escribir en una consola: mongod
 
-Para arrancar arrancar el servidor se utiliza en otra consola el comando: npm run dev
+Para arrancar el servidor se utiliza en otra consola el comando: npm run dev
 
 Modulos necesarios para el funcionamiento del proyecto en nodejs:
 
