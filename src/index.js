@@ -14,10 +14,13 @@ const server = http.createServer(app);
 const io = socketio(server);
 require('./database');
 require('./config/passport');
+//llama a la funcion para conectar por sockets
+require('./public/js/sockets')(io);
 
-io.on('connection', socket =>{
-    console.log('nuevo usuario conectado');
-});
+// io.on("connection", (socket) => {
+//   console.log("nuevo usuario conectado");
+// });
+
 
 //configuraciones
 app.set('port', 3000);
