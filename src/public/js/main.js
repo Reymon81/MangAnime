@@ -4,10 +4,11 @@ $(function(){
     
     const socket = io();
     //obteniendo los datos
-    const $messageForm = $('#message-form'); 
+    const $messageForm = $('#message-form');
     const $messageBox = $('#message'); 
-    const $chat = $('#chat'); 
-
+    const $chat = $('#chat');
+   
+    
     //obteniendo eventos
     $messageForm.submit( e => { 
         //evito que se refresque la pantalla cuando se envian mensajes

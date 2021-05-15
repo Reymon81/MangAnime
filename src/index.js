@@ -58,7 +58,7 @@ app.use((req, res, next) => {
 })
 
 //rutas
-app.use(require('./routes/index')); 
+app.use(require('./routes/index.routes')); 
 app.use(require('./routes/chat'));
 app.use(require('./routes/users'));
 

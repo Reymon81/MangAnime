@@ -7,4 +7,5 @@ router.get('/chat', (req, res) => {
   res.render("chat/chat", params);
 });
 
+
 module.exports = router;
