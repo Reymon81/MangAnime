@@ -16,16 +16,40 @@ router.get('/users/signin', (req, res) => {
     res.render('users/signin');
 });
 
-//direccion para el chat principal
-router.get("/chat/bienvenida", (req, res) => {
-  res.render("chat/bienvenida");
-});
+// //direccion para el chat general
+// router.get("/chat/general", (req, res) => {
+//   res.render("chat/general");
+// });
 
-//direccion para el chat naruto
-router.get("/chat/naruto", (req, res) => {
-  res.render("chat/naruto");
-});
+// //direccion para el chat naruto
+// router.get("/chat/naruto", (req, res) => {
+//   res.render("chat/naruto");
+// });
 
+// //direccion para el chat doctor stone
+// router.get("/chat/doctor", (req, res) => {
+//   res.render("chat/doctor");
+// });
+
+// //direccion para el chat kimetsu no yaiba
+// router.get("/chat/kimetsu", (req, res) => {
+//   res.render("chat/kimetsu");
+// });
+
+// //direccion para el chat one piece
+// router.get("/chat/piece", (req, res) => {
+//   res.render("chat/piece");
+// });
+
+// //direccion para el chat sword art online
+// router.get("/chat/sao", (req, res) => {
+//   res.render("chat/sao");
+// });
+
+// //direccion para el chat yakusoku no neverland
+// router.get("/chat/yakusoku", (req, res) => {
+//   res.render("chat/yakusoku");
+// });
 
 //autenticacion dl introducir nick y password 
 router.post('/users/signin', passport.authenticate('local', {

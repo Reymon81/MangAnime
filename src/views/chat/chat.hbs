@@ -1,53 +1,96 @@
-<center><h1>Bienvenido {{user.nick}} !!</h1></center>
+<link rel="stylesheet" href="/css/bienvenida.css">
+<h1 style="text-align: center">Bienvenido {{user.nick}} !!</h1>
 
 <br/>
 <center><p><h2>Elige uno de nuestros servidores</h2></p></center>
-<button onclick="location.href='/chat/bienvenida'">Chat General</button>
-<button onclick="location.href='/chat/naruto'">Chat Naruto</button>
+<br/>
+{{!-- <button onclick="location.href='/chat/general'">General</button>
+<button onclick="location.href='/chat/naruto'">Naruto</button>
+<button onclick="location.href='/chat/kimetsu'">Kimetsu no yaiba</button>
+<button onclick="location.href='/chat/yakusoku'">Yakusoku no verland</button>
+<button onclick="location.href='/chat/doctor'">Doctor Stone</button>
+<button onclick="location.href='/chat/piece'">One Piece</button>
+<button onclick="location.href='/chat/sao'">Sword art online</button> --}}
+<div class="row">
+    <div class="d-flex flex-row gallery col-md-10 offset-md-2">
 
-{{!-- <div class="row">
-    <div class="container">
-        <div class="col-md-6 mt-4">
-            <div class="card">
-                <div class="card-header">
-                <center><h4>CONVERSACIONES</h4></center> 
-                </div>
-                
-                <div id ="chat" class="card-body"></div>
-                <form id="message-form" class="card-footer">
-                    <div class="input-group">
-                        <input type="text" id="message" class="form-control">
-                        <div class="input-group-append">
-                            <input type="submit" class="btn btn-primary btn-block">
-                        </div>
-                    </div>
-                </form>
-            </div>
+        <div class="card" style="width: 16rem;" >
+        <img src="/img/general.jpg" class="card-img-top" alt="general" height="150">
+        <div class="card-body">
+            <h5 class="card-title">General</h5>
+            <p class="card-text">Si eres un otaku entra en la sala para hablar de todo el manga y anime en general</p>
+            <a href="/chat/general" class="btn btn-primary">Chatear</a>
         </div>
+        </div>
+
+        <div class="card" style="width: 16rem;">
+        <img src="/img/doctor.jpg" class="card-img-top" alt="doctor" height="150">
+        <div class="card-body">
+            <h5 class="card-title">Doctor Stone</h5>
+            <p class="card-text">Si eres fanatico de la ciencia no te puedes perder el anime sobre este cientifico</p>
+            <a href="/chat/doctor" class="btn btn-primary">Chatear</a>
+        </div>
+        </div>
+
+        <div class="card" style="width: 16rem;">
+        <img src="/img/kimetsu.jpg" class="card-img-top" alt="kimetsu" height="150">
+        <div class="card-body">
+            <h5 class="card-title">Kimetsu no yaiba</h5>
+            <p class="card-text">No te pierdas el poder compartir tus ideas sobre estos demonios de la noche </p>
+            <a href="/chat/kimetsu" class="btn btn-primary">Chatear</a>
+        </div>
+        </div>
+
+        <div class="card" style="width: 16rem;">
+        <img src="/img/naruto.jpg" class="card-img-top" alt="naruto" height="150">
+        <div class="card-body">
+            <h5 class="card-title">Naruto</h5>
+            <p class="card-text">Si te apasiona el mundo de los ninjas, este es el lugar para hablar del gran clasico </p>
+            <a href="/chat/naruto" class="btn btn-primary">Chatear</a>
+        </div>
+        </div>
+
+        
     </div>
-    
-    
-    <class class="container" id="contenWrap">
-        <div class="col-md-6  mt-4">
-        <div class="card col-md-8">
-            <div class="card-header">
-                <center><h4>USUARIOS</h4></center>
-            </div> 
-            <div class="card-body">
-                <div id="usuarios"></div>
-            </div>
+
+    <div class="d-flex flex-row gallery mt-3 col-md-10 offset-md-2">
+        <div class="card" style="width: 16rem;">
+        <img src="/img/piece.jpg" class="card-img-top" alt="piece" height="150">
+        <div class="card-body">
+            <h5 class="card-title">One Piece</h5>
+            <p class="card-text">¿Quien no conoce a este pirata? entra y disfruta con todos sus seguidores </p>
+            <a href="/chat/piece" class="btn btn-primary">Chatear</a>
         </div>
-    </div> 
-    </class>
-   
-     
+        </div>
+
+        <div class="card" style="width: 16rem;">
+        <img src="/img/sao.jpg" class="card-img-top" alt="sao" height="150">
+        <div class="card-body">
+            <h5 class="card-title">Sword art online</h5>
+            <p class="card-text">Sumergete en un mundo virtual donde solo puedes vivir blandiendo la espada </p>
+            <a href="/chat/sao" class="btn btn-primary">Chatear</a>
+        </div>
+        </div>
+
+        <div class="card" style="width: 16rem;">
+        <img src="/img/tokyo.jpg" class="card-img-top" alt="sao" height="150">
+        <div class="card-body">
+            <h5 class="card-title">Tokyo ghoul</h5>
+            <p class="card-text">¿Monstruos o semi-humanos? disfruta de las conversaciones de lo que podría ser un ghoul </p>
+            <a href="/chat/tokyo" class="btn btn-primary">Chatear</a>
+        </div>
+        </div>
+
+        <div class="card" style="width: 16rem;">
+        <img src="/img/yakusoku.jpg" class="card-img-top" alt="sao" height="150">
+        <div class="card-body">
+            <h5 class="card-title">Yakusoku no neverland</h5>
+            <p class="card-text">chatea sobre el terror psicologico que produce este anime de niños </p>
+            <a href="/chat/yakusoku" class="btn btn-primary">Chatear</a>
+        </div>
+        </div>
+
+
+    </div>
+
 </div>
-
-
-<!-- JQUERY -->
-<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-
-
-<script src="/socket.io/socket.io.js" charset="utf-8"></script>
-<script src="/js/main.js" charset="utf-8"></script> --}}
-
