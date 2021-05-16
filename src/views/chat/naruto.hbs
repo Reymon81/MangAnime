@@ -1,11 +1,4 @@
-<center><h1>Bienvenido {{user.nick}} !!</h1></center>
-
-<br/>
-<center><p><h2>Elige uno de nuestros servidores</h2></p></center>
-<button onclick="location.href='/chat/bienvenida'">Chat General</button>
-<button onclick="location.href='/chat/naruto'">Chat Naruto</button>
-
-{{!-- <div class="row">
+<div class="row">
     <div class="container">
         <div class="col-md-6 mt-4">
             <div class="card">
@@ -13,10 +6,10 @@
                 <center><h4>CONVERSACIONES</h4></center> 
                 </div>
                 
-                <div id ="chat" class="card-body"></div>
-                <form id="message-form" class="card-footer">
+                <div id ="chat-naruto" class="card-body"></div>
+                <form id="message-form-naruto" class="card-footer">
                     <div class="input-group">
-                        <input type="text" id="message" class="form-control">
+                        <input type="text" id="message-naruto" class="form-control">
                         <div class="input-group-append">
                             <input type="submit" class="btn btn-primary btn-block">
                         </div>
@@ -49,5 +42,4 @@
 
 
 <script src="/socket.io/socket.io.js" charset="utf-8"></script>
-<script src="/js/main.js" charset="utf-8"></script> --}}
-
+<script src="/js/main.js" charset="utf-8"></script>

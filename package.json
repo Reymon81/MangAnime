@@ -4,7 +4,7 @@
   "description": "Chat con web sockets",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon src/index.js"
+    "dev": "nodemon src/server.js"
   },
   "keywords": [],
   "author": "Ramon Torres",

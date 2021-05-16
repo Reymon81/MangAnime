@@ -12,4 +12,17 @@ module.exports = function(io) {
       io.sockets.emit('new message', data);
     })
   });
+
+  /////////////////chat naruto/////////////////
+  io.on("connection", (socket) => {
+    console.log("nuevo usuario conectado");
+
+    socket.on("send message-naruto", function (data) {
+      //console.log(data);
+
+      //cuando el servidor recibe el mensaje de un cliente, lo reenvia a todos los clientes
+      io.sockets.emit("new message-naruto", data);
+    });
+  });
+
 };

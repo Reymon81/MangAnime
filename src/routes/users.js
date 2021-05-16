@@ -16,6 +16,16 @@ router.get('/users/signin', (req, res) => {
     res.render('users/signin');
 });
 
+//direccion para el chat principal
+router.get("/chat/bienvenida", (req, res) => {
+  res.render("chat/bienvenida");
+});
+
+//direccion para el chat naruto
+router.get("/chat/naruto", (req, res) => {
+  res.render("chat/naruto");
+});
+
 
 //autenticacion dl introducir nick y password 
 router.post('/users/signin', passport.authenticate('local', {
@@ -23,6 +33,7 @@ router.post('/users/signin', passport.authenticate('local', {
     failureRedirect: '/users/signin',
     failureFlash: true
 }));
+
 
 //direccion para pagina de darse de alta
 router.get('/users/signup', (req, res) => {
