@@ -1,0 +1,46 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary sticky-top">
+     <div class="container">
+    <a class="navbar-brand" href="/">Manganime</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav">
+          <li class="nav-item active">
+            <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/about">About</a>
+          </li>
+      </ul>
+      <ul class="navbar-nav ml-auto">
+        {{#if user}}
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Servidores 
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item" href="/chat/general">Chat General</a>
+              <a class="dropdown-item" href="/chat/doctor">Chat Dr Stone</a>
+              <a class="dropdown-item" href="/chat/kimetsu">Chat Kimetsu</a>
+              <a class="dropdown-item" href="/chat/naruto">Chat Naruto</a>
+              <a class="dropdown-item" href="/chat/piece">Chat One Piece</a>
+              <a class="dropdown-item" href="/chat/sao">Chat Sao</a>
+              <a class="dropdown-item" href="/chat/tokyo">Chat Tokyo Ghoul</a>
+              <a class="dropdown-item" href="/chat/yakusoku">Chat Yakusoku</a>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item" href="/users/logout">Logout</a>
+            </div>
+          </li>
+        {{else}}
+          <li class="nav-item">
+            <a class="nav-link" href="/users/signin">Login</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/users/signup">Register</a>
+          </li>
+        {{/if}}
+      </ul>
+    </div>
+  </div>
+</nav>
