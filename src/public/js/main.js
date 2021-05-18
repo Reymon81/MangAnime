@@ -1,6 +1,6 @@
 //conexion de socket del cliente
 
-$(function(){
+$(function () {
   const socket = io();
   //obteniendo los datos del chat general
   const $messageForm = $("#message-form");
@@ -175,5 +175,4 @@ $(function(){
   socket.on("new message-yakusoku", function (data) {
     $chatYakusoku.append(data + "<br/>");
   });
-
-})
+});
