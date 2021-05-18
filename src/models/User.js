@@ -6,7 +6,8 @@ const bcrypt = require('bcryptjs');
 //datos que vamos a guardar
 const UserSchema = new Schema({
     nick: { type: String, required: true},
-    email: { type: String, required: true},
+    //unique: true tan solo puede haber un nick con ese nombre en toda la base de datos
+    email: { type: String, required: true, unique: true },
     password: { type: String, required: true}
 });
 

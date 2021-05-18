@@ -1,12 +1,17 @@
 const passport = require('passport');
+
+//passport-local para iniciar sesion desde twitter, facebook, etc...
 const localStrategy = require('passport-local').Strategy;
 
 const User = require('../models/User');
 
 passport.use(new localStrategy({
-    usernameField: 'nick'
-}, async (nick, password, done) => {
-    const user = await User.findOne({ nick: nick });
+    usernameField: 'nick',
+    passwordField: 'password'
+}, async (nick, password, done) => {  
+    
+    //busco si existe ese nick en la base de datos
+    const user = await User.findOne({nick});
     
     if(!user) {
         return done(null, false, {message: 'El usuario no existe'});

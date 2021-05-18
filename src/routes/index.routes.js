@@ -1,5 +1,6 @@
 const {Router} = require('express');
 const router = Router();
+const { isAuthenticated} = require('../helpers/auth');
 
 router.get('/', (req, res) => {
     res.render('index');
@@ -11,7 +12,9 @@ router.get('/about', (req, res) => {
 
 //direccion para el chat general
 router.get("/chat/general", (req, res) => {
-  res.render("chat/general");
+  //if(isAuthenticated){
+    res.render("chat/general");
+  //}  
 });
 
 //direccion para el chat naruto

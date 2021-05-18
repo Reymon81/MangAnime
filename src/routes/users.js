@@ -16,6 +16,10 @@ router.get('/users/signin', (req, res) => {
     res.render('users/signin');
 });
 
+//direccion para pagina de darse de alta
+router.get('/users/signup', (req, res) => {
+    res.render('users/signup');
+});
 
 //autenticacion dl introducir nick y password 
 router.post('/users/signin', passport.authenticate('local', {
@@ -23,13 +27,6 @@ router.post('/users/signin', passport.authenticate('local', {
     failureRedirect: '/users/signin',
     failureFlash: true
 }));
-
-
-//direccion para pagina de darse de alta
-router.get('/users/signup', (req, res) => {
-    res.render('users/signup');
-});
-
 
 //se reciben los datos del formulario de alta 
 router.post('/users/signup', async (req, res) => {
