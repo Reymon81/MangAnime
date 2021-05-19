@@ -1,20 +1,23 @@
-const {Router} = require('express');
+const { Router } = require("express");
 const router = Router();
-const { isAuthenticated} = require('../helpers/auth');
+const { isAuthenticated } = require("../helpers/auth");
 
-router.get('/', (req, res) => {
-    res.render('index');
+router.get("/", (req, res) => {
+  res.render("index");
 });
 
-router.get('/about', (req, res) => {
-    res.render('about');
+router.get("/about", (req, res) => {
+  res.render("about");
 });
 
 //direccion para el chat general
 router.get("/chat/general", (req, res) => {
   //if(isAuthenticated){
-    res.render("chat/general");
-  //}  
+  // const params = { user: { nick: req.user?.nick } };
+  const params = { user: JSON.stringify(req.user), nick: req.user?.nick };
+  console.log("/chat/general", params);
+  res.render("chat/general", params);
+  //}
 });
 
 //direccion para el chat naruto
@@ -52,4 +55,4 @@ router.get("/chat/yakusoku", (req, res) => {
   res.render("chat/yakusoku");
 });
 
-module.exports = router; 
+module.exports = router;

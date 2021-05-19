@@ -1,6 +1,7 @@
 //conexion de socket del cliente
 
 $(function () {
+  const userData = window.___DATA___;
   const socket = io();
   //obteniendo los datos del chat general
   const $messageForm = $("#message-form");
@@ -21,7 +22,10 @@ $(function () {
   $messageForm.submit((e) => {
     //evito que se refresque la pantalla cuando se envian mensajes
     e.preventDefault();
-    socket.emit("send message", $messageBox.val());
+    socket.emit("send message", {
+      message: $messageBox.val(),
+      nick: userData.nick,
+    });
 
     //vaciamos la barra de texto para escribir un mensaje nuevo
     $messageBox.val("");
@@ -29,7 +33,9 @@ $(function () {
 
   //el cliente recibe todos los mensajes que envia el servidor
   socket.on("new message", function (data) {
-    $chat.append(data + "<br/>");
+    const message = `<strong>${data.nick}: </strong> <span>${data.message}</span> <br/>`;
+    // $chat.append(userData.nick + data + "<br/>");
+    $chat.append(message);
   });
 
   ////////////chat naruto /////////////
