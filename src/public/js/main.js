@@ -1,6 +1,7 @@
 //conexion de socket del cliente
 
 $(function () {
+  //obtengo toda la informacion del objeto usuario
   const userData = window.___DATA___;
   const socket = io();
   //obteniendo los datos del chat general
@@ -44,7 +45,10 @@ $(function () {
   $messageFormNaruto.submit((e) => {
     //evito que se refresque la pantalla cuando se envian mensajes
     e.preventDefault();
-    socket.emit("send message-naruto", $messageBoxNaruto.val());
+    socket.emit("send message-naruto", {
+      message: $messageBoxNaruto.val(),
+      nick: userData.nick,
+    });
 
     //vaciamos la barra de texto para escribir un mensaje nuevo
     $messageBoxNaruto.val("");
@@ -52,7 +56,8 @@ $(function () {
 
   //el cliente recibe todos los mensajes que envia el servidor
   socket.on("new message-naruto", function (data) {
-    $chatNaruto.append(data + "<br/>");
+    const message = `<strong>${data.nick}: </strong> <span>${data.message}</span> <br/>`;
+    $chatNaruto.append(message);
   });
 
   ////////////chat doctor stone /////////////
@@ -61,7 +66,10 @@ $(function () {
   $messageFormDoctor.submit((e) => {
     //evito que se refresque la pantalla cuando se envian mensajes
     e.preventDefault();
-    socket.emit("send message-doctor", $messageBoxDoctor.val());
+    socket.emit("send message-doctor", {
+      message: $messageBoxDoctor.val(),
+      nick: userData.nick,
+    });
 
     //vaciamos la barra de texto para escribir un mensaje nuevo
     $messageBoxDoctor.val("");
@@ -69,7 +77,8 @@ $(function () {
 
   //el cliente recibe todos los mensajes que envia el servidor
   socket.on("new message-doctor", function (data) {
-    $chatDoctor.append(data + "<br/>");
+    const message = `<strong>${data.nick}: </strong> <span>${data.message}</span> <br/>`;
+    $chatDoctor.append(message);
   });
 
   /////////chat kimetsu no yaiba////////////
@@ -83,7 +92,10 @@ $(function () {
   $messageFormKimetsu.submit((e) => {
     //evito que se refresque la pantalla cuando se envian mensajes
     e.preventDefault();
-    socket.emit("send message-kimetsu", $messageBoxKimetsu.val());
+    socket.emit("send message-kimetsu", {
+      message: $messageBoxKimetsu.val(),
+      nick: userData.nick,
+    });
 
     //vaciamos la barra de texto para escribir un mensaje nuevo
     $messageBoxKimetsu.val("");
@@ -91,7 +103,8 @@ $(function () {
 
   //el cliente recibe todos los mensajes que envia el servidor
   socket.on("new message-kimetsu", function (data) {
-    $chatKimetsu.append(data + "<br/>");
+    const message = `<strong>${data.nick}: </strong> <span>${data.message}</span> <br/>`;
+    $chatKimetsu.append(message);
   });
 
   /////////chat one piece////////////
@@ -105,7 +118,10 @@ $(function () {
   $messageFormPiece.submit((e) => {
     //evito que se refresque la pantalla cuando se envian mensajes
     e.preventDefault();
-    socket.emit("send message-piece", $messageBoxPiece.val());
+    socket.emit("send message-piece", {
+      message: $messageBoxPiece.val(),
+      nick: userData.nick,
+    });
 
     //vaciamos la barra de texto para escribir un mensaje nuevo
     $messageBoxPiece.val("");
@@ -113,7 +129,8 @@ $(function () {
 
   //el cliente recibe todos los mensajes que envia el servidor
   socket.on("new message-piece", function (data) {
-    $chatPiece.append(data + "<br/>");
+    const message = `<strong>${data.nick}: </strong> <span>${data.message}</span> <br/>`;
+    $chatPiece.append(message);
   });
 
   /////////chat sword art online////////////
@@ -127,7 +144,10 @@ $(function () {
   $messageFormSao.submit((e) => {
     //evito que se refresque la pantalla cuando se envian mensajes
     e.preventDefault();
-    socket.emit("send message-sao", $messageBoxSao.val());
+    socket.emit("send message-sao", {
+      message: $messageBoxSao.val(),
+      nick: userData.nick,
+    });
 
     //vaciamos la barra de texto para escribir un mensaje nuevo
     $messageBoxSao.val("");
@@ -135,7 +155,8 @@ $(function () {
 
   //el cliente recibe todos los mensajes que envia el servidor
   socket.on("new message-sao", function (data) {
-    $chatSao.append(data + "<br/>");
+    const message = `<strong>${data.nick}: </strong> <span>${data.message}</span> <br/>`;
+    $chatSao.append(message);
   });
 
   /////////chat tokyo ghoul////////////
@@ -149,7 +170,10 @@ $(function () {
   $messageFormTokyo.submit((e) => {
     //evito que se refresque la pantalla cuando se envian mensajes
     e.preventDefault();
-    socket.emit("send message-tokyo", $messageBoxTokyo.val());
+    socket.emit("send message-tokyo", {
+      message: $messageBoxTokyo.val(),
+      nick: userData.nick,
+    });
 
     //vaciamos la barra de texto para escribir un mensaje nuevo
     $messageBoxTokyo.val("");
@@ -157,7 +181,8 @@ $(function () {
 
   //el cliente recibe todos los mensajes que envia el servidor
   socket.on("new message-tokyo", function (data) {
-    $chatTokyo.append(data + "<br/>");
+    const message = `<strong>${data.nick}: </strong> <span>${data.message}</span> <br/>`;
+    $chatTokyo.append(message);
   });
 
   /////////chat yakusoku no neverland////////////
@@ -171,7 +196,10 @@ $(function () {
   $messageFormYakusoku.submit((e) => {
     //evito que se refresque la pantalla cuando se envian mensajes
     e.preventDefault();
-    socket.emit("send message-yakusoku", $messageBoxYakusoku.val());
+    socket.emit("send message-yakusoku", {
+      message: $messageBoxYakusoku.val(),
+      nick: userData.nick,
+    });
 
     //vaciamos la barra de texto para escribir un mensaje nuevo
     $messageBoxYakusoku.val("");
@@ -179,6 +207,7 @@ $(function () {
 
   //el cliente recibe todos los mensajes que envia el servidor
   socket.on("new message-yakusoku", function (data) {
-    $chatYakusoku.append(data + "<br/>");
+    const message = `<strong>${data.nick}: </strong> <span>${data.message}</span> <br/>`;
+    $chatYakusoku.append(message);
   });
 });

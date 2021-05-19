@@ -20,39 +20,47 @@ router.get("/chat/general", (req, res) => {
   //}
 });
 
-//direccion para el chat naruto
+//direccion para el chat 
+
 router.get("/chat/naruto", (req, res) => {
-  res.render("chat/naruto");
+  const params = { user: JSON.stringify(req.user), nick: req.user?.nick };
+  res.render("chat/naruto",params);
 });
 
 //direccion para el chat doctor stone
 router.get("/chat/doctor", (req, res) => {
-  res.render("chat/doctor");
+  const params = { user: JSON.stringify(req.user), nick: req.user?.nick };
+  res.render("chat/doctor", params);
 });
 
 //direccion para el chat kimetsu no yaiba
 router.get("/chat/kimetsu", (req, res) => {
-  res.render("chat/kimetsu");
+  const params = { user: JSON.stringify(req.user), nick: req.user?.nick };
+  res.render("chat/kimetsu", params);
 });
 
 //direccion para el chat one piece
 router.get("/chat/piece", (req, res) => {
-  res.render("chat/piece");
+  const params = { user: JSON.stringify(req.user), nick: req.user?.nick };
+  res.render("chat/piece", params);
 });
 
 //direccion para el chat sword art online
 router.get("/chat/sao", (req, res) => {
-  res.render("chat/sao");
+  const params = { user: JSON.stringify(req.user), nick: req.user?.nick };
+  res.render("chat/sao", params);
 });
 
 //direccion para el chat tokyo ghoul
 router.get("/chat/tokyo", (req, res) => {
-  res.render("chat/tokyo");
+  const params = { user: JSON.stringify(req.user), nick: req.user?.nick };
+  res.render("chat/tokyo", params);
 });
 
 //direccion para el chat yakusoku no neverland
 router.get("/chat/yakusoku", (req, res) => {
-  res.render("chat/yakusoku");
+  const params = { user: JSON.stringify(req.user), nick: req.user?.nick };
+  res.render("chat/yakusoku", params);
 });
 
 module.exports = router;
