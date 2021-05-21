@@ -45,6 +45,14 @@ module.exports = function(io) {
     socket.on("send message-yakusoku", function (data) {
       io.sockets.emit("new message-yakusoku", data);
     });
+    ///
+
+    socket.on("client connect", function (data) {
+      console.log("client connect")
+      console.log(data);
+      io.sockets.emit("new client connect", data);
+    });
+
 
   });
 

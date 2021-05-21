@@ -21,6 +21,22 @@ $(function () {
   const $chatDoctor = $("#chat-doctor");
 
   ///
+  
+    socket.on("connect", function () {
+       socket.emit("client connect", {
+         nick: userData.nick,
+       });
+
+    });
+    const $usuarios = $("#usuarios");
+    socket.on("new client connect", function (data) {
+      const message = `<strong>${data.nick}</strong><br/>`;
+      $usuarios.append(message);
+    });
+
+
+
+
   ///
 
   //obteniendo eventos chat general
