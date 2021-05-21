@@ -1,18 +1,17 @@
 //conexion de socket del servidor
 
-module.exports = function(io) {
-
+module.exports = function (io) {
   io.on("connection", (socket) => {
-
-    console.log("conectado", socket);
+    // console.log("conectado", socket);
     //chat general
     socket.on("send message", function (data) {
       //cuando el servidor recibe el mensaje de un cliente, lo reenvia a todos los clientes
       io.sockets.emit("new message", data);
-    }); 
+    });
 
     //chat naruto
-    socket.on("send message-naruto", function (data) {     
+    // socket.on("send connected-naruto");
+    socket.on("send message-naruto", function (data) {
       io.sockets.emit("new message-naruto", data);
     });
 
@@ -46,6 +45,20 @@ module.exports = function(io) {
       io.sockets.emit("new message-yakusoku", data);
     });
 
+    socket.on("client connect", function (data) {
+      console.log("client connect");
+      io.sockets.emit("new client connect", data);
+    });
+    socket.on("connect saludo", function (data) {
+      console.log("Saludando a usuario conectado.");
+      io.sockets.emit("send connect saludo", data);
+    });
+    socket.on("disconnect", function (data) {
+      console.log("DISCONNECT!", data);
+    });
+    socket.on("send bye bye", function (data) {
+      console.log("send bye bye", data);
+      io.sockets.emit("bye bye", data);
+    });
   });
-
 };

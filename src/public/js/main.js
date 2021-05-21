@@ -8,7 +8,6 @@ $(function () {
   const $messageForm = $("#message-form");
   const $messageBox = $("#message");
   const $chat = $("#chat");
-  
 
   //obteniendo los datos del chat Naruto
   const $messageFormNaruto = $("#message-form-naruto");
@@ -20,8 +19,71 @@ $(function () {
   const $messageBoxDoctor = $("#message-doctor");
   const $chatDoctor = $("#chat-doctor");
 
-  ///
-  ///
+  socket.on("connect", function () {
+    socket.emit("client connect", {
+      nick: userData.nick,
+      channel: window.location.pathname, // /chat/doctor
+    });
+  });
+
+  // caja donde vamos a guardar los nicks
+  const $usuarios = $("#usuarios");
+  const getUsers = () =>
+    [...$usuarios[0].querySelectorAll("strong")].map((el) =>
+      el.textContent.trim()
+    );
+  const addUser = (user) => {
+    const usuariosActuales = getUsers();
+    if (!usuariosActuales.find((u) => u === user)) {
+      const message = `<strong>${user}</strong><br/>`;
+      $usuarios.append(message);
+    }
+  };
+  const removeUser = (user) => {
+    let isDeleted = false;
+    [...$usuarios[0].children].forEach((element) => {
+      if (isDeleted) {
+        element.remove();
+        isDeleted = false;
+      }
+      if (element.textContent === user) {
+        element.remove();
+        isDeleted = true;
+      }
+    });
+  };
+  socket.on("new client connect", function (data) {
+    if (data.channel === window.location.pathname) {
+      addUser(data.nick);
+      socket.emit("connect saludo", userData);
+    }
+  });
+  socket.on("send connect saludo", function (data) {
+    if (data.nick !== userData.nick) {
+      addUser(data.nick);
+    }
+  });
+  window.byeSocket = function (e) {
+    console.log("Bye bye", userData);
+    socket.emit("send bye bye", {
+      nick: userData.nick,
+      channel: window.location.pathname,
+    });
+    window.location.pathname = "/users/logout";
+  };
+  window.addEventListener("beforeunload", window.byeSocket);
+  socket.on("disconnect", function () {
+    socket.emit("send bye bye", {
+      nick: userData.nick,
+      channel: window.location.pathname,
+    });
+  });
+  socket.on("bye bye", function (data) {
+    console.log(data);
+    if (window.location.pathname === data.channel) {
+      removeUser(data.nick);
+    }
+  });
 
   //obteniendo eventos chat general
   $messageForm.submit((e) => {
@@ -43,7 +105,7 @@ $(function () {
     $chat.append(message);
   });
 
-   ////////////chat naruto /////////////
+  ////////////chat naruto /////////////
 
   //obteniendo eventos
   $messageFormNaruto.submit((e) => {
