@@ -17,11 +17,6 @@ require('./config/passport');
 //llama a la funcion para conectar por sockets
 require('./public/js/sockets')(io);
 
-// io.on("connection", (socket) => {
-//   console.log("nuevo usuario conectado");
-// });
-
-
 //configuraciones
 app.set('port', 3000);
 app.set('views', path.join(__dirname,'views'));

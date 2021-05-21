@@ -8,6 +8,7 @@ $(function () {
   const $messageForm = $("#message-form");
   const $messageBox = $("#message");
   const $chat = $("#chat");
+  
 
   //obteniendo los datos del chat Naruto
   const $messageFormNaruto = $("#message-form-naruto");
@@ -18,6 +19,9 @@ $(function () {
   const $messageFormDoctor = $("#message-form-doctor");
   const $messageBoxDoctor = $("#message-doctor");
   const $chatDoctor = $("#chat-doctor");
+
+  ///
+  ///
 
   //obteniendo eventos chat general
   $messageForm.submit((e) => {
@@ -39,7 +43,7 @@ $(function () {
     $chat.append(message);
   });
 
-  ////////////chat naruto /////////////
+   ////////////chat naruto /////////////
 
   //obteniendo eventos
   $messageFormNaruto.submit((e) => {
