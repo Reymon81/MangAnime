@@ -28,6 +28,7 @@ $(function () {
        });
 
     });
+    // caja donde vamos a guardar los nicks
     const $usuarios = $("#usuarios");
     socket.on("new client connect", function (data) {
       const message = `<strong>${data.nick}</strong><br/>`;

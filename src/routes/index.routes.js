@@ -15,7 +15,6 @@ router.get("/chat/general", (req, res) => {
   //if(isAuthenticated){
   // const params = { user: { nick: req.user?.nick } };
   const params = { user: JSON.stringify(req.user), nick: req.user?.nick };
-  console.log("/chat/general", params);
   res.render("chat/general", params);
   //}
 });
