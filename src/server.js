@@ -8,6 +8,7 @@ const session = require('express-session');
 const flash = require('connect-flash');
 const passport = require('passport');
 
+
 //inicializaciones
 const app = express();
 const server = http.createServer(app);

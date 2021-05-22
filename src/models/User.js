@@ -3,6 +3,7 @@ const { Schema } = mongoose;
 //modulo para encriptar passwords
 const bcrypt = require('bcryptjs');
 
+
 //datos que vamos a guardar
 const UserSchema = new Schema({
     nick: { type: String, required: true},

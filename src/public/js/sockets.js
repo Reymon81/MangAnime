@@ -1,47 +1,72 @@
-//conexion de socket del servidor
+const Abuses = require("../../models/Abuse");
 
+const hideBadWord = (badWord) => {
+  let word = "";
+  for (let i = 0; i < badWord.length; i++) {
+    word += "*";
+  }
+  return word;
+};
+const filteredMessage = async (data) => {
+  const abuses = await Abuses.find({});
+  const messageFiltered = abuses.reduce((acum, abuse) => {
+    abuse=abuse.abuse.toLowerCase();
+    return acum.replaceAll(abuse, hideBadWord(abuse));
+    
+  }, data.message);
+  data.message = messageFiltered;
+  return data;
+};
+
+//conexion de socket del servidor
 module.exports = function (io) {
   io.on("connection", (socket) => {
-    // console.log("conectado", socket);
     //chat general
-    socket.on("send message", function (data) {
-      //cuando el servidor recibe el mensaje de un cliente, lo reenvia a todos los clientes
+    socket.on("send message", async function (data) {
+      
+      data = await filteredMessage(data);
       io.sockets.emit("new message", data);
     });
 
     //chat naruto
-    // socket.on("send connected-naruto");
-    socket.on("send message-naruto", function (data) {
+    socket.on("send message-naruto", async function (data) {
+      data = await filteredMessage(data);
       io.sockets.emit("new message-naruto", data);
     });
 
     //chat doctor stone
-    socket.on("send message-doctor", function (data) {
+    socket.on("send message-doctor", async function (data) {
+      data = await filteredMessage(data);
       io.sockets.emit("new message-doctor", data);
     });
 
     //chat kimetsu no yaiba
-    socket.on("send message-kimetsu", function (data) {
+    socket.on("send message-kimetsu", async function (data) {
+      data = await filteredMessage(data);
       io.sockets.emit("new message-kimetsu", data);
     });
 
     //one piece
-    socket.on("send message-piece", function (data) {
+    socket.on("send message-piece", async function (data) {
+      data = await filteredMessage(data);
       io.sockets.emit("new message-piece", data);
     });
 
     //sword art online
-    socket.on("send message-sao", function (data) {
+    socket.on("send message-sao", async function (data) {
+      data = await filteredMessage(data);
       io.sockets.emit("new message-sao", data);
     });
 
     //tokyo ghoul
-    socket.on("send message-tokyo", function (data) {
+    socket.on("send message-tokyo", async function (data) {
+      data = await filteredMessage(data);
       io.sockets.emit("new message-tokyo", data);
     });
 
     //yakusoku no neverland
-    socket.on("send message-yakusoku", function (data) {
+    socket.on("send message-yakusoku", async function (data) {
+      data = await filteredMessage(data);
       io.sockets.emit("new message-yakusoku", data);
     });
 
