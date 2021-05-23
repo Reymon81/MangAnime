@@ -1,6 +1,8 @@
 const Abuses = require("../../models/Abuse");
- const Messages = require("../../models/Messages");
+const Messages = require("../../models/Messages");
+const MessagesNaruto = require("../../models/MessagesNaruto");
 
+ //recorro una palabra y sustituyo cada caracter por *
 const hideBadWord = (badWord) => {
   let word = "";
   for (let i = 0; i < badWord.length; i++) {
@@ -8,6 +10,9 @@ const hideBadWord = (badWord) => {
   }
   return word;
 };
+
+//leo el mensaje del cliente y comparo las palabras con la de la lista de insultos de bd
+//si alguna palabra coincide la sustituyo por los asteriscos
 const filteredMessage = async (data) => {
   const abuses = await Abuses.find({});
   const messageFiltered = abuses.reduce((acum, abuse) => {
@@ -24,17 +29,33 @@ module.exports = function (io) {
   io.on("connection", (socket) => {
     //chat general
     socket.on("send message", async function (data) {
-      
       data = await filteredMessage(data);
-      io.sockets.emit("new message", data);
+      //creo un nuevo mensaje para guardarlo en una lista de mongodb
+      message = new Messages(data);
+      try {
+        await message.save();
+        //console.log(resp);
+        //envio el mensaje recibido a todos los clientes
+        io.sockets.emit("new message", data);
+      } catch (error) {
+        console.log(error);
+      }
     });
 
     //chat naruto
     socket.on("send message-naruto", async function (data) {
-      data = await filteredMessage(data);
-      message = new Messages(data);
-      await message.save();
-      io.sockets.emit("new message-naruto", data);
+      //utilizo la funcion filteredMessage para enviar el mensaje sin insultos
+     data = await filteredMessage(data);
+     message = new MessagesNaruto(data);
+     try {
+       await message.save();
+       //console.log(resp);
+       //envio el mensaje recibido a todos los clientes
+       io.sockets.emit("new message-naruto", data);
+     } catch (error) {
+       console.log(error);
+     }
+           
     });
 
     //chat doctor stone

@@ -22,7 +22,7 @@ $(function () {
   socket.on("connect", function () {
     socket.emit("client connect", {
       nick: userData.nick,
-      channel: window.location.pathname, // /chat/doctor
+      channel: window.location.pathname, 
     });
   });
 
@@ -116,6 +116,7 @@ $(function () {
     //evito que se refresque la pantalla cuando se envian mensajes
     e.preventDefault();
     socket.emit("send message-naruto", {
+      //room: UserData.room,
       message: $messageBoxNaruto.val(),
       nick: userData.nick,
     });
@@ -309,3 +310,4 @@ $(function () {
      });
   });
 });
+

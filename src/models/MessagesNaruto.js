@@ -12,4 +12,4 @@ const ChatSchema = new Schema({
   },
 });
 
-module.exports = mongoose.model('Chat', ChatSchema);
+module.exports = mongoose.model("Naruto", ChatSchema);
