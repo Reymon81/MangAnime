@@ -1,4 +1,5 @@
 const Abuses = require("../../models/Abuse");
+ const Messages = require("../../models/Messages");
 
 const hideBadWord = (badWord) => {
   let word = "";
@@ -31,6 +32,8 @@ module.exports = function (io) {
     //chat naruto
     socket.on("send message-naruto", async function (data) {
       data = await filteredMessage(data);
+      message = new Messages(data);
+      await message.save();
       io.sockets.emit("new message-naruto", data);
     });
 

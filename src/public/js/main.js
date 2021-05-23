@@ -1,4 +1,4 @@
-//conexion de socket del cliente
+//conexion de socket del 
 
 $(function () {
   //obtengo toda la informacion del objeto usuario
@@ -101,8 +101,12 @@ $(function () {
   //el cliente recibe todos los mensajes que envia el servidor
   socket.on("new message", function (data) {
     const message = `<strong>${data.nick}: </strong> <span>${data.message}</span> <br/>`;
-    // $chat.append(userData.nick + data + "<br/>");
     $chat.append(message);
+    //todos los elementos del dom de la clase chat asignandolos a un array
+     const chats = [...document.getElementsByClassName("chat")];
+     chats.forEach((chat) => {
+       chat.scrollTop = chat.scrollHeight;
+     });
   });
 
   ////////////chat naruto /////////////
@@ -122,11 +126,15 @@ $(function () {
 
   //el cliente recibe todos los mensajes que envia el servidor
   socket.on("new message-naruto", function (data) {
-    const message = `<strong>${data.nick}: </strong> <span>${data.message}</span> <br/>`;
+    const message = `<strong>${data.nick}: </strong> <span>${data.message}</span> <br/>`;    
     $chatNaruto.append(message);
+    const chats = [...document.getElementsByClassName("chat")];
+    chats.forEach((chat)=>{
+      chat.scrollTop = chat.scrollHeight;
+    })
   });
 
-  ////////////chat doctor stone /////////////
+  ////////////chat doctor stone ////////////
 
   //obteniendo eventos
   $messageFormDoctor.submit((e) => {
@@ -145,6 +153,10 @@ $(function () {
   socket.on("new message-doctor", function (data) {
     const message = `<strong>${data.nick}: </strong> <span>${data.message}</span> <br/>`;
     $chatDoctor.append(message);
+     const chats = [...document.getElementsByClassName("chat")];
+     chats.forEach((chat) => {
+       chat.scrollTop = chat.scrollHeight;
+     });
   });
 
   /////////chat kimetsu no yaiba////////////
@@ -171,6 +183,10 @@ $(function () {
   socket.on("new message-kimetsu", function (data) {
     const message = `<strong>${data.nick}: </strong> <span>${data.message}</span> <br/>`;
     $chatKimetsu.append(message);
+     const chats = [...document.getElementsByClassName("chat")];
+     chats.forEach((chat) => {
+       chat.scrollTop = chat.scrollHeight;
+     });
   });
 
   /////////chat one piece////////////
@@ -197,6 +213,10 @@ $(function () {
   socket.on("new message-piece", function (data) {
     const message = `<strong>${data.nick}: </strong> <span>${data.message}</span> <br/>`;
     $chatPiece.append(message);
+     const chats = [...document.getElementsByClassName("chat")];
+     chats.forEach((chat) => {
+       chat.scrollTop = chat.scrollHeight;
+     });
   });
 
   /////////chat sword art online////////////
@@ -223,6 +243,10 @@ $(function () {
   socket.on("new message-sao", function (data) {
     const message = `<strong>${data.nick}: </strong> <span>${data.message}</span> <br/>`;
     $chatSao.append(message);
+     const chats = [...document.getElementsByClassName("chat")];
+     chats.forEach((chat) => {
+       chat.scrollTop = chat.scrollHeight;
+     });
   });
 
   /////////chat tokyo ghoul////////////
@@ -249,6 +273,10 @@ $(function () {
   socket.on("new message-tokyo", function (data) {
     const message = `<strong>${data.nick}: </strong> <span>${data.message}</span> <br/>`;
     $chatTokyo.append(message);
+     const chats = [...document.getElementsByClassName("chat")];
+     chats.forEach((chat) => {
+       chat.scrollTop = chat.scrollHeight;
+     });
   });
 
   /////////chat yakusoku no neverland////////////
@@ -275,5 +303,9 @@ $(function () {
   socket.on("new message-yakusoku", function (data) {
     const message = `<strong>${data.nick}: </strong> <span>${data.message}</span> <br/>`;
     $chatYakusoku.append(message);
+     const chats = [...document.getElementsByClassName("chat")];
+     chats.forEach((chat) => {
+       chat.scrollTop = chat.scrollHeight;
+     });
   });
 });
