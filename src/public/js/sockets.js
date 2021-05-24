@@ -1,6 +1,12 @@
 const Abuses = require("../../models/Abuse");
 const Messages = require("../../models/Messages");
 const MessagesNaruto = require("../../models/MessagesNaruto");
+const MessagesDoctor = require("../../models/MessagesDoctor");
+const MessagesKimetsu = require("../../models/MessagesKimetsu");
+const MessagesPiece = require("../../models/MessagesPiece");
+const MessagesSao = require("../../models/MessagesSao");
+const MessagesTokyo = require("../../models/MessagesTokyo");
+const MessagesYakusoku = require("../../models/MessagesYakusoku");
 
  //recorro una palabra y sustituyo cada caracter por *
 const hideBadWord = (badWord) => {
@@ -61,37 +67,85 @@ module.exports = function (io) {
     //chat doctor stone
     socket.on("send message-doctor", async function (data) {
       data = await filteredMessage(data);
-      io.sockets.emit("new message-doctor", data);
+      message = new MessagesDoctor(data);
+      try {
+        await message.save();
+        //console.log(resp);
+        //envio el mensaje recibido a todos los clientes
+        io.sockets.emit("new message-doctor", data);
+      } catch (error) {
+        console.log(error);
+      }
     });
 
     //chat kimetsu no yaiba
     socket.on("send message-kimetsu", async function (data) {
       data = await filteredMessage(data);
-      io.sockets.emit("new message-kimetsu", data);
+      message = new MessagesKimetsu(data);
+      try {
+        await message.save();
+        //console.log(resp);
+        //envio el mensaje recibido a todos los clientes
+        io.sockets.emit("new message-kimetsu", data);
+      } catch (error) {
+        console.log(error);
+      }
     });
 
     //one piece
     socket.on("send message-piece", async function (data) {
       data = await filteredMessage(data);
-      io.sockets.emit("new message-piece", data);
+      message = new MessagesPiece(data);
+      try {
+        await message.save();
+        //console.log(resp);
+        //envio el mensaje recibido a todos los clientes
+        io.sockets.emit("new message-piece", data);
+      } catch (error) {
+        console.log(error);
+      }
     });
 
     //sword art online
     socket.on("send message-sao", async function (data) {
       data = await filteredMessage(data);
-      io.sockets.emit("new message-sao", data);
+      message = new MessagesSao(data);
+      try {
+        await message.save();
+        //console.log(resp);
+        //envio el mensaje recibido a todos los clientes
+        io.sockets.emit("new message-sao", data);
+      } catch (error) {
+        console.log(error);
+      }
     });
 
     //tokyo ghoul
     socket.on("send message-tokyo", async function (data) {
       data = await filteredMessage(data);
-      io.sockets.emit("new message-tokyo", data);
+      message = new MessagesTokyo(data);
+      try {
+        await message.save();
+         //console.log(resp);
+         //envio el mensaje recibido a todos los clientes
+        io.sockets.emit("new message-tokyo", data);
+      } catch (error) {
+        console.log(error);
+      }
     });
 
     //yakusoku no neverland
     socket.on("send message-yakusoku", async function (data) {
       data = await filteredMessage(data);
-      io.sockets.emit("new message-yakusoku", data);
+      message = new MessagesYakusoku(data);
+      try {
+        await message.save();
+        //console.log(resp);
+        //envio el mensaje recibido a todos los clientes
+        io.sockets.emit("new message-yakusoku", data);
+      } catch (error) {
+        console.log(error);
+      }
     });
 
     socket.on("client connect", function (data) {
