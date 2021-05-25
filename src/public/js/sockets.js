@@ -35,12 +35,13 @@ module.exports = function (io) {
   io.on("connection", (socket) => {
     //chat general
     socket.on("send message", async function (data) {
+      //filtro el mensaje para que no haya palabras malsonantes
       data = await filteredMessage(data);
       //creo un nuevo mensaje para guardarlo en una lista de mongodb
       message = new Messages(data);
       try {
+        //guardo el mensaje y el nick en la lista del chat mongodb
         await message.save();
-        //console.log(resp);
         //envio el mensaje recibido a todos los clientes
         io.sockets.emit("new message", data);
       } catch (error) {
@@ -50,13 +51,10 @@ module.exports = function (io) {
 
     //chat naruto
     socket.on("send message-naruto", async function (data) {
-      //utilizo la funcion filteredMessage para enviar el mensaje sin insultos
      data = await filteredMessage(data);
      message = new MessagesNaruto(data);
      try {
        await message.save();
-       //console.log(resp);
-       //envio el mensaje recibido a todos los clientes
        io.sockets.emit("new message-naruto", data);
      } catch (error) {
        console.log(error);
@@ -70,8 +68,6 @@ module.exports = function (io) {
       message = new MessagesDoctor(data);
       try {
         await message.save();
-        //console.log(resp);
-        //envio el mensaje recibido a todos los clientes
         io.sockets.emit("new message-doctor", data);
       } catch (error) {
         console.log(error);
@@ -84,8 +80,6 @@ module.exports = function (io) {
       message = new MessagesKimetsu(data);
       try {
         await message.save();
-        //console.log(resp);
-        //envio el mensaje recibido a todos los clientes
         io.sockets.emit("new message-kimetsu", data);
       } catch (error) {
         console.log(error);
@@ -98,8 +92,6 @@ module.exports = function (io) {
       message = new MessagesPiece(data);
       try {
         await message.save();
-        //console.log(resp);
-        //envio el mensaje recibido a todos los clientes
         io.sockets.emit("new message-piece", data);
       } catch (error) {
         console.log(error);
@@ -112,8 +104,6 @@ module.exports = function (io) {
       message = new MessagesSao(data);
       try {
         await message.save();
-        //console.log(resp);
-        //envio el mensaje recibido a todos los clientes
         io.sockets.emit("new message-sao", data);
       } catch (error) {
         console.log(error);
@@ -126,8 +116,6 @@ module.exports = function (io) {
       message = new MessagesTokyo(data);
       try {
         await message.save();
-         //console.log(resp);
-         //envio el mensaje recibido a todos los clientes
         io.sockets.emit("new message-tokyo", data);
       } catch (error) {
         console.log(error);
@@ -140,8 +128,6 @@ module.exports = function (io) {
       message = new MessagesYakusoku(data);
       try {
         await message.save();
-        //console.log(resp);
-        //envio el mensaje recibido a todos los clientes
         io.sockets.emit("new message-yakusoku", data);
       } catch (error) {
         console.log(error);
@@ -152,13 +138,16 @@ module.exports = function (io) {
       console.log("client connect");
       io.sockets.emit("new client connect", data);
     });
+
     socket.on("connect saludo", function (data) {
       console.log("Saludando a usuario conectado.");
       io.sockets.emit("send connect saludo", data);
     });
+
     socket.on("disconnect", function (data) {
       console.log("DISCONNECT!", data);
     });
+    
     socket.on("send bye bye", function (data) {
       console.log("send bye bye", data);
       io.sockets.emit("bye bye", data);

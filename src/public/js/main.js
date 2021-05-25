@@ -1,5 +1,7 @@
 //conexion de socket del 
 
+//const e = require("express");
+
 $(function () {
   //obtengo toda la informacion del objeto usuario
   const userData = window.___DATA___;
@@ -28,41 +30,56 @@ $(function () {
 
   // caja donde vamos a guardar los nicks
   const $usuarios = $("#usuarios");
+
+  //obtiene una lista con los nicks de usuarios
   const getUsers = () =>
     [...$usuarios[0].querySelectorAll("strong")].map((el) =>
       el.textContent.trim()
     );
+
   const addUser = (user) => {
+    //array de nombres para verificar si el nick ya se encuentra en el string y si no se encuentra se añade
     const usuariosActuales = getUsers();
     if (!usuariosActuales.find((u) => u === user)) {
       const message = `<strong>${user}</strong><br/>`;
       $usuarios.append(message);
     }
   };
+
+
   const removeUser = (user) => {
     let isDeleted = false;
     [...$usuarios[0].children].forEach((element) => {
       if (isDeleted) {
+        //eliminando br
         element.remove();
         isDeleted = false;
       }
       if (element.textContent === user) {
+        //si se borra el nick tb eliminamos el strong
         element.remove();
         isDeleted = true;
       }
     });
   };
+
+
   socket.on("new client connect", function (data) {
+    //si hay un nuevo usuario conectandose a la misma sala donde se encuentra se añade
     if (data.channel === window.location.pathname) {
       addUser(data.nick);
       socket.emit("connect saludo", userData);
     }
   });
+
+  //si es diferente el usuario de la sala ve como entra el nuevo
   socket.on("send connect saludo", function (data) {
     if (data.nick !== userData.nick) {
       addUser(data.nick);
     }
   });
+
+
   window.byeSocket = function (e) {
     console.log("Bye bye", userData);
     socket.emit("send bye bye", {
@@ -71,15 +88,32 @@ $(function () {
     });
     window.location.pathname = "/users/logout";
   };
-  window.addEventListener("beforeunload", window.byeSocket);
+
+  // $(window).on("beforeunload", function () {
+  //   window.byeSocket();
+  //   return confirm("Do you really want to close?");
+  // });
+
+  window.addEventListener("beforeunload", (e)=>{
+    //cuando se cierra el chat desaparece el nick de la lista
+    window.byeSocket();
+    e.preventDefault();
+    e.returnValue = "";
+    return "";
+  });
+
+  //avisa de que se va el nick y los demas lo eliminan de la lista
   socket.on("disconnect", function () {
     socket.emit("send bye bye", {
       nick: userData.nick,
       channel: window.location.pathname,
     });
   });
+
+
   socket.on("bye bye", function (data) {
     console.log(data);
+    console.log(window.location.pathname, window.location.pathname===data.channel);
     if (window.location.pathname === data.channel) {
       removeUser(data.nick);
     }
