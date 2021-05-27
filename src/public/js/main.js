@@ -93,22 +93,34 @@ $(function () {
   //   window.byeSocket();
   //   return confirm("Do you really want to close?");
   // });
+  ////////////////////////////////////////////////////////////////
 
-  window.addEventListener("beforeunload", (e)=>{
-    //cuando se cierra el chat desaparece el nick de la lista
-    window.byeSocket();
-    e.preventDefault();
-    e.returnValue = "";
-    return "";
-  });
-
-  //avisa de que se va el nick y los demas lo eliminan de la lista
+  window.addEventListener("beforeunload", window.byeSocket);
   socket.on("disconnect", function () {
     socket.emit("send bye bye", {
       nick: userData.nick,
       channel: window.location.pathname,
     });
   });
+
+
+  ////////////////////////////////////////////////////////////////
+
+  // window.addEventListener("beforeunload", (e)=>{
+  //   //cuando se cierra el chat desaparece el nick de la lista
+  //   window.byeSocket();
+  //   e.preventDefault();
+  //   e.returnValue = "";
+  //   return "";
+  // });
+
+  // //avisa de que se va el nick y los demas lo eliminan de la lista
+  // socket.on("disconnect", function () {
+  //   socket.emit("send bye bye", {
+  //     nick: userData.nick,
+  //     channel: window.location.pathname,
+  //   });
+  // });
 
 
   socket.on("bye bye", function (data) {
@@ -131,7 +143,7 @@ $(function () {
     //vaciamos la barra de texto para escribir un mensaje nuevo
     $messageBox.val("");
   });
-
+  
   //el cliente recibe todos los mensajes que envia el servidor
   socket.on("new message", function (data) {
     const message = `<strong>${data.nick}: </strong> <span>${data.message}</span> <br/>`;

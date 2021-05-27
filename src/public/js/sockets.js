@@ -32,6 +32,7 @@ const filteredMessage = async (data) => {
 
 //conexion de socket del servidor
 module.exports = function (io) {
+  
   io.on("connection", (socket) => {
     //chat general
     socket.on("send message", async function (data) {
