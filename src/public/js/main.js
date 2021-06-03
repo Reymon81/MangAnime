@@ -1,11 +1,25 @@
-//conexion de socket del 
-
-//const e = require("express");
+//conexion de socket del cliente
 
 $(function () {
   //obtengo toda la informacion del objeto usuario
   const userData = window.___DATA___;
+
+  //abro sesion
   const socket = io();
+
+  //le digo al servidor el usuario y la pagina donde se conecta
+  socket.on("connect", function () {
+    socket.emit("client connect", {
+      nick: userData.nick,
+      channel: window.location.pathname.split("/")[2],
+    });
+  });
+
+  socket.on("refresh channel", function(rooms) {
+    const channel= window.location.pathname.split("/")[2];
+    refreshList(rooms[channel]);
+  });
+
   //obteniendo los datos del chat general
   const $messageForm = $("#message-form");
   const $messageBox = $("#message");
@@ -21,13 +35,6 @@ $(function () {
   const $messageBoxDoctor = $("#message-doctor");
   const $chatDoctor = $("#chat-doctor");
 
-  socket.on("connect", function () {
-    socket.emit("client connect", {
-      nick: userData.nick,
-      channel: window.location.pathname, 
-    });
-  });
-
   // caja donde vamos a guardar los nicks
   const $usuarios = $("#usuarios");
 
@@ -37,38 +44,41 @@ $(function () {
       el.textContent.trim()
     );
 
-  const addUser = (user) => {
-    //array de nombres para verificar si el nick ya se encuentra en el string y si no se encuentra se añade
-    const usuariosActuales = getUsers();
-    if (!usuariosActuales.find((u) => u === user)) {
+  const refreshList = (users) => {
+
+    $usuarios.empty();
+    
+    users.map((user) => {
       const message = `<strong>${user}</strong><br/>`;
       $usuarios.append(message);
-    }
-  };
-
-
-  const removeUser = (user) => {
-    let isDeleted = false;
-    [...$usuarios[0].children].forEach((element) => {
-      if (isDeleted) {
-        //eliminando br
-        element.remove();
-        isDeleted = false;
-      }
-      if (element.textContent === user) {
-        //si se borra el nick tb eliminamos el strong
-        element.remove();
-        isDeleted = true;
-      }
     });
   };
 
+  
+  // const removeUser = (user) => {
+  //   let isDeleted = false;
+  //   [...$usuarios[0].children].forEach((element) => {
+  //     if (isDeleted) {
+  //       //eliminando br
+  //       element.remove();
+  //       isDeleted = false;
+  //     }
+  //     if (element.textContent === user) {
+  //       //si se borra el nick tb eliminamos el strong
+  //       element.remove();
+  //       isDeleted = true;
+  //     }
+  //   });
+  // };
+
+  
 
   socket.on("new client connect", function (data) {
     //si hay un nuevo usuario conectandose a la misma sala donde se encuentra se añade
     if (data.channel === window.location.pathname) {
       addUser(data.nick);
       socket.emit("connect saludo", userData);
+      return;
     }
   });
 
@@ -89,40 +99,7 @@ $(function () {
     window.location.pathname = "/users/logout";
   };
 
-  // $(window).on("beforeunload", function () {
-  //   window.byeSocket();
-  //   return confirm("Do you really want to close?");
-  // });
-  ////////////////////////////////////////////////////////////////
-
-  window.addEventListener("beforeunload", window.byeSocket);
-  socket.on("disconnect", function () {
-    socket.emit("send bye bye", {
-      nick: userData.nick,
-      channel: window.location.pathname,
-    });
-  });
-
-
-  ////////////////////////////////////////////////////////////////
-
-  // window.addEventListener("beforeunload", (e)=>{
-  //   //cuando se cierra el chat desaparece el nick de la lista
-  //   window.byeSocket();
-  //   e.preventDefault();
-  //   e.returnValue = "";
-  //   return "";
-  // });
-
-  // //avisa de que se va el nick y los demas lo eliminan de la lista
-  // socket.on("disconnect", function () {
-  //   socket.emit("send bye bye", {
-  //     nick: userData.nick,
-  //     channel: window.location.pathname,
-  //   });
-  // });
-
-
+  
   socket.on("bye bye", function (data) {
     console.log(data);
     console.log(window.location.pathname, window.location.pathname===data.channel);
@@ -356,4 +333,3 @@ $(function () {
      });
   });
 });
-

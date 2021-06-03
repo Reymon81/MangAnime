@@ -1,3 +1,5 @@
+//socket del servidor
+
 const Abuses = require("../../models/Abuse");
 const Messages = require("../../models/Messages");
 const MessagesNaruto = require("../../models/MessagesNaruto");
@@ -7,6 +9,28 @@ const MessagesPiece = require("../../models/MessagesPiece");
 const MessagesSao = require("../../models/MessagesSao");
 const MessagesTokyo = require("../../models/MessagesTokyo");
 const MessagesYakusoku = require("../../models/MessagesYakusoku");
+
+const rooms = {
+  general: [],
+  doctor: [],
+  kimetsu: [],
+  naruto: [],
+  piece: [],
+  sao: [],
+  tokyo: [],
+  yakusoku: [],
+};
+
+function addUserToRoom(userName, roomName){
+
+  console.log(roomName ,userName);
+  rooms[roomName].push(userName);
+}
+
+function removeUserToRoom(userName, roomName) {
+  rooms[roomName] = rooms[roomName].filter((item) => item !== userName);
+}
+
 
  //recorro una palabra y sustituyo cada caracter por *
 const hideBadWord = (badWord) => {
@@ -34,6 +58,9 @@ const filteredMessage = async (data) => {
 module.exports = function (io) {
   
   io.on("connection", (socket) => {
+
+    let user;
+
     //chat general
     socket.on("send message", async function (data) {
       //filtro el mensaje para que no haya palabras malsonantes
@@ -134,9 +161,12 @@ module.exports = function (io) {
         console.log(error);
       }
     });
-
+    
     socket.on("client connect", function (data) {
       console.log("client connect");
+      user = data;
+      addUserToRoom(data.nick, data.channel);
+      io.sockets.emit("refresh channel", rooms);
       io.sockets.emit("new client connect", data);
     });
 
@@ -145,8 +175,11 @@ module.exports = function (io) {
       io.sockets.emit("send connect saludo", data);
     });
 
-    socket.on("disconnect", function (data) {
-      console.log("DISCONNECT!", data);
+    socket.on("disconnect", function () {
+      console.log("DISCONNECT!", user);
+      removeUserToRoom(user.nick, user.channel);
+      io.sockets.emit("refresh channel", rooms);
+      io.sockets.emit("client disconnect", user);
     });
     
     socket.on("send bye bye", function (data) {

@@ -8,3 +8,9 @@ body{
 .logo{
     width: 40%;
 }
+
+.fuente{
+    font-family: Copperplate, Papyrus, fantasy;
+    font-weight: bold;
+    color: #0000ff;
+}

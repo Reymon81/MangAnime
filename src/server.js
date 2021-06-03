@@ -9,6 +9,8 @@ const flash = require('connect-flash');
 const passport = require('passport');
 
 
+
+
 //inicializaciones
 const app = express();
 const server = http.createServer(app);
@@ -60,6 +62,7 @@ app.use(require('./routes/users'));
 
 //enviar archivos estaticos
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, "..", "node_modules", "@farvell")));
 
 //escuchando el servidor
 server.listen(app.get('port'), () =>{
