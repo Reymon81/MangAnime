@@ -10,6 +10,7 @@ const MessagesSao = require("../../models/MessagesSao");
 const MessagesTokyo = require("../../models/MessagesTokyo");
 const MessagesYakusoku = require("../../models/MessagesYakusoku");
 
+//rooms contiene un array por chat donde se guardaran los usuarios conectados
 const rooms = {
   general: [],
   doctor: [],
@@ -21,13 +22,15 @@ const rooms = {
   yakusoku: [],
 };
 
+//funcion para añadir un usuario a una sala determinada
 function addUserToRoom(userName, roomName){
-
-  console.log(roomName ,userName);
+  console.log(userName, "ha entrado en el chat", roomName);
   rooms[roomName].push(userName);
 }
 
+//funcion para eliminar un usuario de una sala determinada
 function removeUserToRoom(userName, roomName) {
+  //devuelve un booleano, si es true lo deja como estaba, si es false borra el usuario del array
   rooms[roomName] = rooms[roomName].filter((item) => item !== userName);
 }
 
@@ -161,7 +164,9 @@ module.exports = function (io) {
         console.log(error);
       }
     });
-    
+
+    //////////// CONEXIONES Y DESCONEXIONES //////////////
+
     socket.on("client connect", function (data) {
       console.log("client connect");
       user = data;
@@ -170,20 +175,20 @@ module.exports = function (io) {
       io.sockets.emit("new client connect", data);
     });
 
-    socket.on("connect saludo", function (data) {
-      console.log("Saludando a usuario conectado.");
-      io.sockets.emit("send connect saludo", data);
-    });
+    // socket.on("connect saludo", function (data) {
+    //   console.log("Saludando a usuario conectado.");
+    //   io.sockets.emit("send connect saludo", data);
+    // });
 
     socket.on("disconnect", function () {
-      console.log("DISCONNECT!", user);
+      console.log("Se ha desconectado", user.nick, "del chat", user.channel);
       removeUserToRoom(user.nick, user.channel);
       io.sockets.emit("refresh channel", rooms);
       io.sockets.emit("client disconnect", user);
     });
     
     socket.on("send bye bye", function (data) {
-      console.log("send bye bye", data);
+      console.log(data.nick, "ha realizado un logout");
       io.sockets.emit("bye bye", data);
     });
   });

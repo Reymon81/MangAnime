@@ -11,29 +11,16 @@ $(function () {
   socket.on("connect", function () {
     socket.emit("client connect", {
       nick: userData.nick,
+      //hago split porque la ruta esta compuesta y debo obtener lo que hay despues de la ultima /
       channel: window.location.pathname.split("/")[2],
     });
   });
 
-  socket.on("refresh channel", function(rooms) {
-    const channel= window.location.pathname.split("/")[2];
+  //se refresca la lista de usuarios que hay en el canal
+  socket.on("refresh channel", function (rooms) {
+    const channel = window.location.pathname.split("/")[2];
     refreshList(rooms[channel]);
   });
-
-  //obteniendo los datos del chat general
-  const $messageForm = $("#message-form");
-  const $messageBox = $("#message");
-  const $chat = $("#chat");
-
-  //obteniendo los datos del chat Naruto
-  const $messageFormNaruto = $("#message-form-naruto");
-  const $messageBoxNaruto = $("#message-naruto");
-  const $chatNaruto = $("#chat-naruto");
-
-  //obteniendo los datos del chat doctor stone
-  const $messageFormDoctor = $("#message-form-doctor");
-  const $messageBoxDoctor = $("#message-doctor");
-  const $chatDoctor = $("#chat-doctor");
 
   // caja donde vamos a guardar los nicks
   const $usuarios = $("#usuarios");
@@ -45,16 +32,14 @@ $(function () {
     );
 
   const refreshList = (users) => {
-
     $usuarios.empty();
-    
+
     users.map((user) => {
       const message = `<strong>${user}</strong><br/>`;
       $usuarios.append(message);
     });
   };
 
-  
   // const removeUser = (user) => {
   //   let isDeleted = false;
   //   [...$usuarios[0].children].forEach((element) => {
@@ -71,16 +56,14 @@ $(function () {
   //   });
   // };
 
-  
-
-  socket.on("new client connect", function (data) {
-    //si hay un nuevo usuario conectandose a la misma sala donde se encuentra se añade
-    if (data.channel === window.location.pathname) {
-      addUser(data.nick);
-      socket.emit("connect saludo", userData);
-      return;
-    }
-  });
+  // socket.on("new client connect", function (data) {
+  //   //si hay un nuevo usuario conectandose a la misma sala donde se encuentra se añade
+  //   if (data.channel === window.location.pathname) {
+  //     addUser(data.nick);
+  //     socket.emit("connect saludo", userData);
+  //     return;
+  //   }
+  // });
 
   //si es diferente el usuario de la sala ve como entra el nuevo
   socket.on("send connect saludo", function (data) {
@@ -88,7 +71,6 @@ $(function () {
       addUser(data.nick);
     }
   });
-
 
   window.byeSocket = function (e) {
     console.log("Bye bye", userData);
@@ -99,15 +81,23 @@ $(function () {
     window.location.pathname = "/users/logout";
   };
 
-  
   socket.on("bye bye", function (data) {
     console.log(data);
-    console.log(window.location.pathname, window.location.pathname===data.channel);
+    console.log(
+      window.location.pathname,
+      window.location.pathname === data.channel
+    );
     if (window.location.pathname === data.channel) {
       removeUser(data.nick);
     }
   });
 
+  /////////// CHAT GENERAL //////////
+
+  //obteniendo los datos del chat general
+  const $messageForm = $("#message-form");
+  const $messageBox = $("#message");
+  const $chat = $("#chat");
   //obteniendo eventos chat general
   $messageForm.submit((e) => {
     //evito que se refresque la pantalla cuando se envian mensajes
@@ -120,19 +110,24 @@ $(function () {
     //vaciamos la barra de texto para escribir un mensaje nuevo
     $messageBox.val("");
   });
-  
+
   //el cliente recibe todos los mensajes que envia el servidor
   socket.on("new message", function (data) {
     const message = `<strong>${data.nick}: </strong> <span>${data.message}</span> <br/>`;
     $chat.append(message);
     //todos los elementos del dom de la clase chat asignandolos a un array
-     const chats = [...document.getElementsByClassName("chat")];
-     chats.forEach((chat) => {
-       chat.scrollTop = chat.scrollHeight;
-     });
+    const chats = [...document.getElementsByClassName("chat")];
+    chats.forEach((chat) => {
+      chat.scrollTop = chat.scrollHeight;
+    });
   });
 
-  ////////////chat naruto /////////////
+  //////////// CHAT NARUTO /////////////
+
+  //obteniendo los datos del chat Naruto
+  const $messageFormNaruto = $("#message-form-naruto");
+  const $messageBoxNaruto = $("#message-naruto");
+  const $chatNaruto = $("#chat-naruto");
 
   //obteniendo eventos
   $messageFormNaruto.submit((e) => {
@@ -150,15 +145,20 @@ $(function () {
 
   //el cliente recibe todos los mensajes que envia el servidor
   socket.on("new message-naruto", function (data) {
-    const message = `<strong>${data.nick}: </strong> <span>${data.message}</span> <br/>`;    
+    const message = `<strong>${data.nick}: </strong> <span>${data.message}</span> <br/>`;
     $chatNaruto.append(message);
     const chats = [...document.getElementsByClassName("chat")];
-    chats.forEach((chat)=>{
+    chats.forEach((chat) => {
       chat.scrollTop = chat.scrollHeight;
-    })
+    });
   });
 
-  ////////////chat doctor stone ////////////
+  //////////// CHAT DOCTOR ////////////
+
+  //obteniendo los datos del chat doctor stone
+  const $messageFormDoctor = $("#message-form-doctor");
+  const $messageBoxDoctor = $("#message-doctor");
+  const $chatDoctor = $("#chat-doctor");
 
   //obteniendo eventos
   $messageFormDoctor.submit((e) => {
@@ -177,13 +177,13 @@ $(function () {
   socket.on("new message-doctor", function (data) {
     const message = `<strong>${data.nick}: </strong> <span>${data.message}</span> <br/>`;
     $chatDoctor.append(message);
-     const chats = [...document.getElementsByClassName("chat")];
-     chats.forEach((chat) => {
-       chat.scrollTop = chat.scrollHeight;
-     });
+    const chats = [...document.getElementsByClassName("chat")];
+    chats.forEach((chat) => {
+      chat.scrollTop = chat.scrollHeight;
+    });
   });
 
-  /////////chat kimetsu no yaiba////////////
+  ///////// CHAT KIMETSU ////////////
 
   //obteniendo los datos del chat
   const $messageFormKimetsu = $("#message-form-kimetsu");
@@ -207,13 +207,13 @@ $(function () {
   socket.on("new message-kimetsu", function (data) {
     const message = `<strong>${data.nick}: </strong> <span>${data.message}</span> <br/>`;
     $chatKimetsu.append(message);
-     const chats = [...document.getElementsByClassName("chat")];
-     chats.forEach((chat) => {
-       chat.scrollTop = chat.scrollHeight;
-     });
+    const chats = [...document.getElementsByClassName("chat")];
+    chats.forEach((chat) => {
+      chat.scrollTop = chat.scrollHeight;
+    });
   });
 
-  /////////chat one piece////////////
+  ///////// CHAT ONE PIECE //////////
 
   //obteniendo los datos del chat
   const $messageFormPiece = $("#message-form-piece");
@@ -237,13 +237,13 @@ $(function () {
   socket.on("new message-piece", function (data) {
     const message = `<strong>${data.nick}: </strong> <span>${data.message}</span> <br/>`;
     $chatPiece.append(message);
-     const chats = [...document.getElementsByClassName("chat")];
-     chats.forEach((chat) => {
-       chat.scrollTop = chat.scrollHeight;
-     });
+    const chats = [...document.getElementsByClassName("chat")];
+    chats.forEach((chat) => {
+      chat.scrollTop = chat.scrollHeight;
+    });
   });
 
-  /////////chat sword art online////////////
+  ///////// CHAT SAO ////////////
 
   //obteniendo los datos del chat
   const $messageFormSao = $("#message-form-sao");
@@ -267,13 +267,13 @@ $(function () {
   socket.on("new message-sao", function (data) {
     const message = `<strong>${data.nick}: </strong> <span>${data.message}</span> <br/>`;
     $chatSao.append(message);
-     const chats = [...document.getElementsByClassName("chat")];
-     chats.forEach((chat) => {
-       chat.scrollTop = chat.scrollHeight;
-     });
+    const chats = [...document.getElementsByClassName("chat")];
+    chats.forEach((chat) => {
+      chat.scrollTop = chat.scrollHeight;
+    });
   });
 
-  /////////chat tokyo ghoul////////////
+  /////////// CHAT TOKYO ////////////
 
   //obteniendo los datos del chat
   const $messageFormTokyo = $("#message-form-tokyo");
@@ -297,13 +297,13 @@ $(function () {
   socket.on("new message-tokyo", function (data) {
     const message = `<strong>${data.nick}: </strong> <span>${data.message}</span> <br/>`;
     $chatTokyo.append(message);
-     const chats = [...document.getElementsByClassName("chat")];
-     chats.forEach((chat) => {
-       chat.scrollTop = chat.scrollHeight;
-     });
+    const chats = [...document.getElementsByClassName("chat")];
+    chats.forEach((chat) => {
+      chat.scrollTop = chat.scrollHeight;
+    });
   });
 
-  /////////chat yakusoku no neverland////////////
+  ///////// CHAT YAKUSOKU ////////////
 
   //obteniendo los datos del chat
   const $messageFormYakusoku = $("#message-form-yakusoku");
@@ -327,9 +327,9 @@ $(function () {
   socket.on("new message-yakusoku", function (data) {
     const message = `<strong>${data.nick}: </strong> <span>${data.message}</span> <br/>`;
     $chatYakusoku.append(message);
-     const chats = [...document.getElementsByClassName("chat")];
-     chats.forEach((chat) => {
-       chat.scrollTop = chat.scrollHeight;
-     });
+    const chats = [...document.getElementsByClassName("chat")];
+    chats.forEach((chat) => {
+      chat.scrollTop = chat.scrollHeight;
+    });
   });
 });
