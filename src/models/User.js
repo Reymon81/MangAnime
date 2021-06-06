@@ -6,10 +6,11 @@ const bcrypt = require('bcryptjs');
 
 //datos que vamos a guardar
 const UserSchema = new Schema({
-  //unique: true tan solo puede haber un nick con ese nombre en toda la base de datos
+  //unique: true tan solo puede haber uno igual en toda la base de datos
   nick: { type: String, required: true, unique: true },
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
+  connected: { type: Boolean, required: true, default: false},
 });
 
 //metodo de encriptacion asincrono que devuelve la password cifrada

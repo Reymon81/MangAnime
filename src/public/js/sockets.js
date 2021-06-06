@@ -10,6 +10,7 @@ const MessagesSao = require("../../models/MessagesSao");
 const MessagesTokyo = require("../../models/MessagesTokyo");
 const MessagesYakusoku = require("../../models/MessagesYakusoku");
 
+
 //rooms contiene un array por chat donde se guardaran los usuarios conectados
 const rooms = {
   general: [],
@@ -187,7 +188,7 @@ module.exports = function (io) {
       io.sockets.emit("client disconnect", user);
     });
     
-    socket.on("send bye bye", function (data) {
+    socket.on("send bye bye", function (data) {      
       console.log(data.nick, "ha realizado un logout");
       io.sockets.emit("bye bye", data);
     });

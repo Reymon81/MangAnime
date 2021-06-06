@@ -24,12 +24,12 @@ const roomList = [
 router.get("/chat/:roomId", isAuthenticated, (req, res) => {
   const roomId = req.params.roomId;
   const params = { user: JSON.stringify(req.user), nick: req.user?.nick };
-  console.log("/chat/" + roomId, params);
+  
   if(!roomList.includes(roomId)){
     res.redirect("/");
   }
   res.render("chat/" + roomId, params);
-  //}
+  
 });
 
 module.exports = router;

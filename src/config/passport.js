@@ -1,4 +1,5 @@
 const passport = require('passport');
+const sessionHelper = require("../helpers/session") ;
 
 //passport-local para iniciar sesion desde twitter, facebook, etc...
 const localStrategy = require('passport-local').Strategy;
@@ -17,9 +18,18 @@ passport.use(new localStrategy({
         return done(null, false, {message: 'El usuario no existe'});
     }else{
         const match = await user.matchPassword(password);
-        if(match) { 
+        if(match) {
             
-            return done(null, user);
+            if(user.connected === true){                
+                 return done(null, false, { message: "El usuario esta conectado" });
+            }else{
+                
+                // user.connected = true;
+                // await user.save();
+                sessionHelper.activateSession(nick);
+                return done(null, user);
+            }
+            
         }else{
             return done(null, false, {message: 'Password incorrecta'});
         }
