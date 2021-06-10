@@ -9,6 +9,7 @@ const MessagesPiece = require("../../models/MessagesPiece");
 const MessagesSao = require("../../models/MessagesSao");
 const MessagesTokyo = require("../../models/MessagesTokyo");
 const MessagesYakusoku = require("../../models/MessagesYakusoku");
+const sessionHelper = require("../../helpers/session") ;
 
 
 //rooms contiene un array por chat donde se guardaran los usuarios conectados
@@ -176,19 +177,15 @@ module.exports = function (io) {
       io.sockets.emit("new client connect", data);
     });
 
-    // socket.on("connect saludo", function (data) {
-    //   console.log("Saludando a usuario conectado.");
-    //   io.sockets.emit("send connect saludo", data);
-    // });
-
     socket.on("disconnect", function () {
       console.log("Se ha desconectado", user.nick, "del chat", user.channel);
       removeUserToRoom(user.nick, user.channel);
       io.sockets.emit("refresh channel", rooms);
       io.sockets.emit("client disconnect", user);
     });
-    
-    socket.on("send bye bye", function (data) {      
+
+    socket.on("send bye bye", function (data) {
+      sessionHelper.desactivateSession(data.nick);    
       console.log(data.nick, "ha realizado un logout");
       io.sockets.emit("bye bye", data);
     });

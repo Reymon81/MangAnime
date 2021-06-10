@@ -4,7 +4,7 @@ $(function () {
   //obtengo toda la informacion del objeto usuario
   const userData = window.___DATA___;
 
-  //abro sesion
+   //abro sesion
   const socket = io();
 
   //le digo al servidor el usuario y la pagina donde se conecta
@@ -40,31 +40,6 @@ $(function () {
     });
   };
 
-  // const removeUser = (user) => {
-  //   let isDeleted = false;
-  //   [...$usuarios[0].children].forEach((element) => {
-  //     if (isDeleted) {
-  //       //eliminando br
-  //       element.remove();
-  //       isDeleted = false;
-  //     }
-  //     if (element.textContent === user) {
-  //       //si se borra el nick tb eliminamos el strong
-  //       element.remove();
-  //       isDeleted = true;
-  //     }
-  //   });
-  // };
-
-  // socket.on("new client connect", function (data) {
-  //   //si hay un nuevo usuario conectandose a la misma sala donde se encuentra se añade
-  //   if (data.channel === window.location.pathname) {
-  //     addUser(data.nick);
-  //     socket.emit("connect saludo", userData);
-  //     return;
-  //   }
-  // });
-
   //si es diferente el usuario de la sala ve como entra el nuevo
   socket.on("send connect saludo", function (data) {
     if (data.nick !== userData.nick) {
@@ -72,11 +47,10 @@ $(function () {
     }
   });
 
-  window.byeSocket = function (e) {
-    console.log("Bye bye", userData);
+  window.byeSocket = function (e) {;
     socket.emit("send bye bye", {
       nick: userData.nick,
-      channel: window.location.pathname,
+      channel: window.location.pathname
     });
     window.location.pathname = "/users/logout";
   };

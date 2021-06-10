@@ -16,17 +16,23 @@
     
         {{> data}}
     </head>
-    <body>   
+    <body onunload="prueba()">   
 
-        {{> navbar2}} 
-        <!--{{> footer}}-->   
+        {{> navbar2}}   
         
         <main class="m-5">
             {{> messages }}
             {{> errors }}
             {{{ body }}}
-        
+            
         </main>
+
+        <script>
+            function prueba(){
+                console.log("probar salida");
+            }
+        </script>
+
 
         <!-- SRIPT QUE BORRA LAS ALERTAS A LOS 3.5 SEGUNDOS -->
         <script src="/js/alertas.js" charset="utf-8"></script>

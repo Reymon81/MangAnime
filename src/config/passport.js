@@ -6,6 +6,7 @@ const localStrategy = require('passport-local').Strategy;
 
 const User = require('../models/User');
 
+
 passport.use(new localStrategy({
     usernameField: 'nick',
     passwordField: 'password'
